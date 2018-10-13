@@ -46,6 +46,5 @@ GRANT DBA TO SA
 SET SCHEMA SYSTEM_LOBS
 INSERT INTO BLOCKS VALUES(0,2147483647,0)
 SET SCHEMA PUBLIC
-INSERT INTO NOTE VALUES(1,'Teste para o Spring Boot2','Nota de teste2')
 INSERT INTO NOTE VALUES(2,'Teste para o Spring Boot','Nota de teste')
 INSERT INTO NOTE VALUES(3,'Teste para o Spring Boot2','Nota de teste2')

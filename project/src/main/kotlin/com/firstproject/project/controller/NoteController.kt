@@ -2,6 +2,7 @@ package com.firstproject.project.controller
 
 import com.firstproject.project.model.Note
 import com.firstproject.project.service.NoteService
+import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 
 @RestController
@@ -9,27 +10,32 @@ import org.springframework.web.bind.annotation.*
 class NoteController (private  val noteService: NoteService) {
 
     @GetMapping
-    fun list(): List<Note> {
-        return noteService.all().toList()
+    fun list(): ResponseEntity<List<Note>> {
+        val allNotes = noteService.all().toList()
+        return ResponseEntity.ok(allNotes)
     }
 
     @PostMapping
-    fun add(@RequestBody note: Note): Note {
-        return noteService.save(note)
+    fun add(@RequestBody note: Note): ResponseEntity<Note> {
+        val savedNote = noteService.save(note)
+        return ResponseEntity.ok(savedNote)
     }
 
     @PutMapping("{id}")
-    fun change(@PathVariable id: Long, @RequestBody note: Note): Note {
+    fun change(@PathVariable id: Long, @RequestBody note: Note): ResponseEntity<Note> {
         if (noteService.existsById(id)) {
-            return noteService.change(id, note)
+            val alteredNote = noteService.change(id, note)
+            return ResponseEntity.ok(alteredNote)
         }
-        return Note()
+        return ResponseEntity.notFound().build()
     }
 
     @DeleteMapping("{id}")
-    fun delete(@PathVariable id: Long) {
+    fun delete(@PathVariable id: Long): ResponseEntity<Unit> {
         if(noteService.existsById(id)) {
             noteService.deleteById(id)
+            return ResponseEntity.ok().build()
         }
+        return ResponseEntity.notFound().build()
     }
 }
