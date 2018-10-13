@@ -3,6 +3,7 @@ package com.firstproject.project.service
 import com.firstproject.project.model.Note
 import com.firstproject.project.repository.NoteRepository
 import org.springframework.stereotype.Service
+import java.util.*
 
 @Service
 class NoteService(private val noteRepository: NoteRepository) {
@@ -26,6 +27,10 @@ class NoteService(private val noteRepository: NoteRepository) {
     fun change(id: Long, note: Note): Note {
         var safeNote = note.copy(id = id)
         return save(safeNote)
+    }
+
+    fun findById(id: Long): Optional<Note> {
+        return noteRepository.findById(id)
     }
 
 }
